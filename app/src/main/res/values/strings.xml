@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">DxLoadingButton</string>
+    <string name="button_text">Login</string>
+</resources>
