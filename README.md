@@ -3,11 +3,12 @@
 android button width loading animation,and successful or failed animation.
 
 Demo:
+---
    
 ![image](https://github.com/StevenDXC/DxLoadingButton/blob/master/image/loadingButton.gif)
 
 Usage:
-
+---
 
 layout:
 
