@@ -1,6 +1,6 @@
 # DxLoadingButton
 
-android button width loading animation,and successful or failed animation.
+android button to loading view with animation,and load successful/failed animation
 
 Demo:
 ---
