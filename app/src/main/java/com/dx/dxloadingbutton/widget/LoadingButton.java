@@ -28,17 +28,18 @@ import com.dx.dxloadingbutton.R;
 
 public class LoadingButton extends View {
 
-    private static final int STATE_BUTTON = 0;
-    private static final int STATE_ANIMATION_STEP1 = 1;
-    private static final int STATE_ANIMATION_STEP2 = 2;
-    private static final int STATE_ANIMATION_LOADING = 3;
-    private static final int STATE_STOP_LOADING = 4;
-    private static final int STATE_ANIMATION_SUCCESS = 5;
-    private static final int STATE_ANIMATION_FAILED = 6;
+    public static final int STATE_BUTTON = 0;
+    public static final int STATE_ANIMATION_STEP1 = 1;
+    public static final int STATE_ANIMATION_STEP2 = 2;
+    public static final int STATE_ANIMATION_LOADING = 3;
+    public static final int STATE_STOP_LOADING = 4;
+    public static final int STATE_ANIMATION_SUCCESS = 5;
+    public static final int STATE_ANIMATION_FAILED = 6;
 
 
     private int mColorPrimary;
     private int mTextColor;
+    private int mRippleColor;
     private boolean resetAfterFailed; //when loading data failed, whether reset view
     private String mText;
 
@@ -116,6 +117,7 @@ public class LoadingButton extends View {
             mText = text == null ? "" : text;
             mTextColor = ta.getColor(R.styleable.LoadingButton_textColor,Color.WHITE);
             resetAfterFailed = ta.getBoolean(R.styleable.LoadingButton_resetAfterFailed,true);
+            mRippleColor = ta.getColor(R.styleable.LoadingButton_rippleColor,Color.BLACK);
             ta.recycle();
         }
 
@@ -137,7 +139,7 @@ public class LoadingButton extends View {
 
         ripplePaint = new Paint();
         ripplePaint.setAntiAlias(true);
-        ripplePaint.setColor(mTextColor);
+        ripplePaint.setColor(mRippleColor);
         ripplePaint.setAlpha((int)(0.3*255));
         ripplePaint.setStyle(Paint.Style.FILL);
 
@@ -149,7 +151,7 @@ public class LoadingButton extends View {
 
         mTextPaint = new Paint();
         mTextPaint.setAntiAlias(true);
-        mTextPaint.setColor(Color.WHITE);
+        mTextPaint.setColor(mTextColor);
         mTextPaint.setTextSize(16*mDensity);
         mTextPaint.setFakeBoldText(true);
         mTextWidth = mTextPaint.measureText(mText);
@@ -294,6 +296,9 @@ public class LoadingButton extends View {
         return resetAfterFailed;
     }
 
+    public int getCurrentState(){
+        return mCurrentState;
+    }
 
     private void createSuccessPath(){
 
@@ -307,7 +312,7 @@ public class LoadingButton extends View {
 
         float left = width/2 - mRadius + mRadius/3 + mLineWith;
         float top = mPadding + mRadius/2 + mLineWith;
-        float right = width/2 + mRadius + mLineWith - mRadius/2;
+        float right = width/2 + mRadius - mLineWith - mRadius/3;
         float bottom = (mLineWith + mRadius) * 1.5f + mPadding/2;
         float xPoint = width/2 - mRadius/6;
 
@@ -379,6 +384,7 @@ public class LoadingButton extends View {
                 if(mCurrentState == STATE_BUTTON){
                     canvas.drawText(mText,(width-mTextWidth)/2,(height-mTextHeight)/2+mPadding*2,mTextPaint);
                     if(mTouchX > 0 || mTouchY > 0){
+                        canvas.clipRect(0,mPadding,width,height-mPadding);
                         canvas.drawCircle(mTouchX,mTouchY,mRippleRadius,ripplePaint);
                     }
                 }

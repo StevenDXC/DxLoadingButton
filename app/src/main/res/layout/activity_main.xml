@@ -14,7 +14,6 @@
         android:layout_gravity="top"
         android:layout_marginTop="16dp"
         android:layout_marginLeft="16dp"
-        android:enabled="false"
         android:text="successful"/>
 
     <Button
@@ -23,7 +22,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="top|center_horizontal"
         android:layout_marginTop="16dp"
-        android:enabled="false"
         android:text="failed"/>
 
     <Button
@@ -33,7 +31,6 @@
         android:layout_gravity="top|right"
         android:layout_marginTop="16dp"
         android:layout_marginRight="16dp"
-        android:enabled="false"
         android:text="reset"/>
 
     <com.dx.dxloadingbutton.widget.LoadingButton
@@ -42,6 +39,7 @@
         android:layout_width="228dp"
         android:layout_height="wrap_content"
         app:resetAfterFailed="true"
+        app:rippleColor="#000000"
         app:text="@string/button_text"
         />
 

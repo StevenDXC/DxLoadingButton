@@ -5,5 +5,6 @@
         <attr name="text" format="reference|string" />
         <attr name="textColor" format="reference|string" />
         <attr name="resetAfterFailed" format="boolean" />
+        <attr name="rippleColor" format="reference|color" />
     </declare-styleable>
 </resources>

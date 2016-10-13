@@ -25,8 +25,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 lb.startLoading();
-                sucBtn.setEnabled(true);
-                failedBtn.setEnabled(true);
             }
         });
 
@@ -34,9 +32,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 lb.loadingSuccessful();
-                sucBtn.setEnabled(false);
-                failedBtn.setEnabled(false);
-                resetBtn.setEnabled(true);
             }
         });
 
@@ -45,9 +40,6 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 lb.loadingFiled();
                 Toast.makeText(getApplicationContext(),"login failed,try again",Toast.LENGTH_SHORT).show();
-                sucBtn.setEnabled(false);
-                failedBtn.setEnabled(false);
-                resetBtn.setEnabled(!lb.isResetAfterFailed());
             }
         });
 
@@ -55,9 +47,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 lb.reset();
-                sucBtn.setEnabled(false);
-                failedBtn.setEnabled(false);
-                resetBtn.setEnabled(false);
             }
         });
     }
