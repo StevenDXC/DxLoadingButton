@@ -44,6 +44,12 @@ show failed animation:
 ```java
  lb.loadingFiled();
 ```
+cancel loading:
+
+```java
+ lb.cancelLoading();
+```
+
 reset:
 
 ```java
