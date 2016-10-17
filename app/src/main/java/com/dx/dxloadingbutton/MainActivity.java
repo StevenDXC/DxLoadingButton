@@ -19,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
         final Button sucBtn = (Button) findViewById(R.id.btn_success);
         final Button failedBtn = (Button) findViewById(R.id.btn_failed);
         final Button resetBtn = (Button) findViewById(R.id.btn_reset);
+        final Button cancelBtn = (Button) findViewById(R.id.btn_cancel);
 
         final LoadingButton lb = (LoadingButton)findViewById(R.id.loading_btn);
         lb.setOnClickListener(new View.OnClickListener() {
@@ -38,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
         failedBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                lb.loadingFiled();
+                lb.loadingFailed();
                 Toast.makeText(getApplicationContext(),"login failed,try again",Toast.LENGTH_SHORT).show();
             }
         });
@@ -47,6 +48,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 lb.reset();
+            }
+        });
+
+        cancelBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                lb.cancelLoading();
             }
         });
     }

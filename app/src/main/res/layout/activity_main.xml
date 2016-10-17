@@ -7,31 +7,43 @@
     android:layout_height="match_parent"
     tools:context="com.dx.dxloadingbutton.MainActivity">
 
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical">
+
     <Button
         android:id="@+id/btn_success"
-        android:layout_width="wrap_content"
+        android:layout_weight="1"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="top"
-        android:layout_marginTop="16dp"
-        android:layout_marginLeft="16dp"
+        android:textSize="10sp"
         android:text="successful"/>
 
     <Button
         android:id="@+id/btn_failed"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="top|center_horizontal"
-        android:layout_marginTop="16dp"
+        android:layout_weight="1"
         android:text="failed"/>
 
     <Button
         android:id="@+id/btn_reset"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="top|right"
-        android:layout_marginTop="16dp"
-        android:layout_marginRight="16dp"
+        android:layout_weight="1"
         android:text="reset"/>
+
+
+    <Button
+        android:id="@+id/btn_cancel"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="cancel"/>
+
+    </LinearLayout>
 
     <com.dx.dxloadingbutton.widget.LoadingButton
         android:id="@+id/loading_btn"

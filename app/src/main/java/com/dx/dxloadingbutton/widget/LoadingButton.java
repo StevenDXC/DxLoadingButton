@@ -28,14 +28,19 @@ import com.dx.dxloadingbutton.R;
 
 public class LoadingButton extends View {
 
-    public static final int STATE_BUTTON = 0;
-    public static final int STATE_ANIMATION_STEP1 = 1;
-    public static final int STATE_ANIMATION_STEP2 = 2;
-    public static final int STATE_ANIMATION_LOADING = 3;
-    public static final int STATE_STOP_LOADING = 4;
-    public static final int STATE_ANIMATION_SUCCESS = 5;
-    public static final int STATE_ANIMATION_FAILED = 6;
+    public enum AnimationType {
+        SUCCESSFUL,FAILED
+    }
 
+    private static final int STATE_BUTTON = 0;
+    private static final int STATE_ANIMATION_STEP1 = 1;
+    private static final int STATE_ANIMATION_STEP2 = 2;
+    private static final int STATE_ANIMATION_LOADING = 3;
+    private static final int STATE_STOP_LOADING = 4;
+    private static final int STATE_ANIMATION_SUCCESS = 5;
+    private static final int STATE_ANIMATION_FAILED = 6;
+
+    private AnimationEndListener mAnimationEndListener;
 
     private int mColorPrimary;
     private int mTextColor;
@@ -265,12 +270,19 @@ public class LoadingButton extends View {
     /**
      * loading data failed
      */
-    public void loadingFiled(){
+    public void loadingFailed(){
         if(mLoadingAnimator != null && mLoadingAnimator.isRunning()){
             mLoadingAnimator.end();
             mCurrentState = STATE_STOP_LOADING;
             playFailedAnimation();
         }
+    }
+
+    public void cancelLoading(){
+        if(mCurrentState != STATE_ANIMATION_LOADING){
+            return;
+        }
+        cancel();
     }
 
     /**
@@ -298,6 +310,10 @@ public class LoadingButton extends View {
 
     public int getCurrentState(){
         return mCurrentState;
+    }
+
+    public void setAnimationEndListener(AnimationEndListener animationEndListener){
+         this.mAnimationEndListener = animationEndListener;
     }
 
     private void createSuccessPath(){
@@ -523,6 +539,14 @@ public class LoadingButton extends View {
         successAnimator.setInterpolator(new AccelerateDecelerateInterpolator());
         AnimatorSet set = new AnimatorSet();
         set.playSequentially(animator,successAnimator);
+        set.addListener(new AnimatorEndListener() {
+            @Override
+            public void onAnimationEnd(Animator animator) {
+                if(mAnimationEndListener != null){
+                    mAnimationEndListener.onAnimationEnd(AnimationType.SUCCESSFUL);
+                }
+            }
+        });
         set.start();
     }
 
@@ -585,10 +609,37 @@ public class LoadingButton extends View {
                             scaleFailedPath();
                         }
                     },1000);
+                    return;
+                }
+
+                if(mAnimationEndListener != null){
+                    mAnimationEndListener.onAnimationEnd(AnimationType.FAILED);
                 }
             }
         });
         set.start();
+    }
+
+    private void cancel(){
+        mCurrentState = STATE_STOP_LOADING;
+        ValueAnimator animator = ValueAnimator.ofInt(360-mAngle,360);
+        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                mEndAngle = (Integer) valueAnimator.getAnimatedValue();
+                invalidate();
+            }
+        });
+        animator.setDuration(240);
+        animator.setInterpolator(new DecelerateInterpolator());
+        animator.addListener(new AnimatorEndListener() {
+            @Override
+            public void onAnimationEnd(Animator animator) {
+                mCurrentState = STATE_ANIMATION_STEP2;
+                playStartAnimation(true);
+            }
+        });
+        animator.start();
     }
 
     private void scaleSuccessPath(){
@@ -677,5 +728,10 @@ public class LoadingButton extends View {
 
         @Override
         public void onAnimationRepeat(Animator animator){}
+    }
+
+
+    public interface AnimationEndListener{
+        void onAnimationEnd(AnimationType animationType);
     }
 }
