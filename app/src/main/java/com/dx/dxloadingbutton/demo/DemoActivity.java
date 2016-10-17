@@ -75,12 +75,12 @@ public class DemoActivity extends AppCompatActivity {
         mLoadingBtn.postDelayed(new Runnable() {
             @Override
             public void run() {
+                mEditUserName.setEnabled(true);
+                mEditPassword.setEnabled(true);
                if("admin".endsWith(userName) && "admin".equals(password)){
                    //login success
                    mLoadingBtn.loadingSuccessful();
                }else{
-                   mEditUserName.setEnabled(true);
-                   mEditPassword.setEnabled(true);
                    mLoadingBtn.loadingFailed();
                    Toast.makeText(getApplicationContext(),"login failad,please check username and password",Toast.LENGTH_SHORT).show();
                }
