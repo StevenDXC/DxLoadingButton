@@ -42,7 +42,7 @@ show successful animation:
 show failed animation:
 
 ```java
- lb.loadingFiled();
+ lb.loadingFailed();
 ```
 cancel loading:
 
