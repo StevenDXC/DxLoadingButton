@@ -25,7 +25,7 @@
         android:inputType="textPassword"
         android:hint="@string/password"/>
 
-    <com.dx.dxloadingbutton.widget.LoadingButton
+    <com.dx.dxloadingbutton.lib.LoadingButton
         android:id="@+id/loading_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

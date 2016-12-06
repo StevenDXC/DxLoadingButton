@@ -10,12 +10,8 @@ import android.widget.Toast;
 
 import com.dx.dxloadingbutton.MainActivity;
 import com.dx.dxloadingbutton.R;
-import com.dx.dxloadingbutton.widget.LoadingButton;
+import com.dx.dxloadingbutton.lib.LoadingButton;
 
-
-/**
- * Created by Miutrip_iMac on 2016/10/17.
- */
 
 public class DemoActivity extends AppCompatActivity {
 

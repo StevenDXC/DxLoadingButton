@@ -6,7 +6,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.dx.dxloadingbutton.widget.LoadingButton;
+import com.dx.dxloadingbutton.lib.LoadingButton;
+
 
 public class MainActivity extends AppCompatActivity {
 
