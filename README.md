@@ -61,17 +61,17 @@ dependency
 Add it in your root build.gradle at the end of repositories:
 
 ```java
-	allprojects {
-		repositories {
-			...
-			maven { url 'https://jitpack.io' }
-		}
-	}
+allprojects {
+    repositories {
+	...
+	maven { url 'https://jitpack.io' }
+    }
+}
 ```
 add dependency：
 
 ```java
 dependencies {
-	        compile 'com.github.StevenDXC:DxLoadingButton:1.1'
-	}
+    compile 'com.github.StevenDXC:DxLoadingButton:1.1'
+}
 ```
