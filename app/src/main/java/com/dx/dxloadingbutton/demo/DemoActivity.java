@@ -78,7 +78,7 @@ public class DemoActivity extends AppCompatActivity {
                    mLoadingBtn.loadingSuccessful();
                }else{
                    mLoadingBtn.loadingFailed();
-                   Toast.makeText(getApplicationContext(),"login failad,please check username and password",Toast.LENGTH_SHORT).show();
+                   Toast.makeText(getApplicationContext(),"login failed,please check username and password",Toast.LENGTH_SHORT).show();
                }
             }
         },3000);

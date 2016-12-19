@@ -43,6 +43,7 @@ public class LoadingButton extends View {
     private int mColorPrimary;
     private int mTextColor;
     private int mRippleColor;
+    private float mRippleAlpha;
     private boolean resetAfterFailed; //when loading data failed, whether reset view
     private String mText;
 
@@ -107,12 +108,13 @@ public class LoadingButton extends View {
         if(attrs != null){
             int defaultColor = Color.BLUE;
             TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.LoadingButton, 0, 0);
-            mColorPrimary = ta.getInt(R.styleable.LoadingButton_btnColor,defaultColor);
-            String text = ta.getString(R.styleable.LoadingButton_text);
+            mColorPrimary = ta.getInt(R.styleable.LoadingButton_lb_btnColor,defaultColor);
+            String text = ta.getString(R.styleable.LoadingButton_lb_btnText);
             mText = text == null ? "" : text;
-            mTextColor = ta.getColor(R.styleable.LoadingButton_textColor,Color.WHITE);
-            resetAfterFailed = ta.getBoolean(R.styleable.LoadingButton_resetAfterFailed,true);
-            mRippleColor = ta.getColor(R.styleable.LoadingButton_rippleColor,Color.BLACK);
+            mTextColor = ta.getColor(R.styleable.LoadingButton_lb_textColor,Color.WHITE);
+            resetAfterFailed = ta.getBoolean(R.styleable.LoadingButton_lb_resetAfterFailed,true);
+            mRippleColor = ta.getColor(R.styleable.LoadingButton_lb_btnRippleColor,Color.BLACK);
+            mRippleAlpha = ta.getFloat(R.styleable.LoadingButton_lb_btnRippleAlpha,0.3f);
             ta.recycle();
         }
 
@@ -135,7 +137,7 @@ public class LoadingButton extends View {
         ripplePaint = new Paint();
         ripplePaint.setAntiAlias(true);
         ripplePaint.setColor(mRippleColor);
-        ripplePaint.setAlpha((int)(0.3*255));
+        ripplePaint.setAlpha((int)(mRippleAlpha*255));
         ripplePaint.setStyle(Paint.Style.FILL);
 
         mStrokePaint = new Paint();
@@ -174,7 +176,7 @@ public class LoadingButton extends View {
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         int width = measureDimension((int)(88*mDensity),widthMeasureSpec);
-        int height = measureDimension((int)(48*mDensity),heightMeasureSpec);
+        int height = measureDimension((int)(56*mDensity),heightMeasureSpec);
         setMeasuredDimension(width,height);
     }
 

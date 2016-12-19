@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="LoadingButton">
-        <attr name="btnColor" format="reference|color" />
-        <attr name="text" format="reference|string" />
-        <attr name="textColor" format="reference|string" />
-        <attr name="resetAfterFailed" format="boolean" />
-        <attr name="rippleColor" format="reference|color" />
+        <attr name="lb_btnColor" format="reference|color" />
+        <attr name="lb_btnText" format="reference|string" />
+        <attr name="lb_textColor" format="reference|string" />
+        <attr name="lb_resetAfterFailed" format="boolean" />
+        <attr name="lb_btnRippleColor" format="reference|color" />
+        <attr name="lb_btnRippleAlpha" format="float" />
     </declare-styleable>
 </resources>

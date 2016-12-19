@@ -50,9 +50,9 @@
         android:layout_gravity="center"
         android:layout_width="228dp"
         android:layout_height="wrap_content"
-        app:resetAfterFailed="true"
-        app:rippleColor="#000000"
-        app:text="@string/button_text"
+        app:lb_resetAfterFailed="true"
+        app:lb_btnRippleColor="#000000"
+        app:lb_btnText="@string/button_text"
         />
 
 </FrameLayout>
