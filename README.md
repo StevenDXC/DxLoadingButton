@@ -2,6 +2,9 @@
 
 android button to loading view with animation,and load successful/failed animation
 
+
+[![](https://jitpack.io/v/StevenDXC/DxLoadingButton.svg)](https://jitpack.io/#StevenDXC/DxLoadingButton)
+
 Demo:
 ---
    
@@ -72,6 +75,6 @@ add dependency：
 
 ```java
 dependencies {
-    compile 'com.github.StevenDXC:DxLoadingButton:1.1'
+    compile 'com.github.StevenDXC:DxLoadingButton:1.2'
 }
 ```
