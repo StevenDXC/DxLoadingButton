@@ -45,14 +45,25 @@
 
     </LinearLayout>
 
-    <com.dx.dxloadingbutton.widget.LoadingButton
+    <com.dx.dxloadingbutton.lib.LoadingButton
         android:id="@+id/loading_btn"
         android:layout_gravity="center"
-        android:layout_width="228dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp"
         app:lb_resetAfterFailed="true"
         app:lb_btnRippleColor="#000000"
         app:lb_btnText="@string/button_text"
         />
+
+
+    <Button
+        android:id="@+id/btn_demo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_marginBottom="32dp"
+        android:text="Demo"/>
 
 </FrameLayout>
