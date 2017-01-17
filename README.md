@@ -17,13 +17,14 @@ layout:
 
 ```xml
 <com.dx.dxloadingbutton.widget.LoadingButton
-        android:id="@+id/loading_btn"
-        android:layout_gravity="center"
-        android:layout_width="228dp"
-        android:layout_height="wrap_content"
-	app:lb_resetAfterFailed="true"
-        app:lb_btnRippleColor="#000000"
-        app:lb_btnText="@string/button_text" />
+     android:id="@+id/loading_btn"
+     android:layout_gravity="center"
+     android:layout_width="228dp"
+     android:layout_height="wrap_content"
+     app:lb_resetAfterFailed="true"
+     app:lb_btnRippleColor="#000000"
+     app:lb_btnText="@string/button_text" 
+/>
 ```
 code:
 
