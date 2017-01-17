@@ -23,8 +23,7 @@ layout:
         android:layout_height="wrap_content"
 	app:lb_resetAfterFailed="true"
         app:lb_btnRippleColor="#000000"
-        app:lb_btnText="@string/button_text"
-        />
+        app:lb_btnText="@string/button_text" />
 ```
 code:
 
