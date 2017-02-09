@@ -16,7 +16,7 @@ Usage:
 layout:
 
 ```xml
-<com.dx.dxloadingbutton.widget.LoadingButton
+<com.dx.dxloadingbutton.lib.LoadingButton
      android:id="@+id/loading_btn"
      android:layout_gravity="center"
      android:layout_width="228dp"
