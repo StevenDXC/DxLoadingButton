@@ -16,6 +16,7 @@ import android.graphics.PathEffect;
 import android.graphics.PathMeasure;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -288,6 +289,13 @@ public class LoadingButton extends View {
 
         if(mCurrentState ==  STATE_ANIMATION_FAILED){
             scaleFailedPath();
+        }
+    }
+
+    public void setTypeface(Typeface typeface){
+        if(typeface != null){
+            mTextPaint.setTypeface(typeface);
+            invalidate();
         }
     }
 

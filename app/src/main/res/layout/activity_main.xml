@@ -64,6 +64,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center_horizontal"
         android:layout_marginBottom="32dp"
-        android:text="Demo"/>
+        android:text="login Demo"/>
 
 </FrameLayout>

@@ -1,6 +1,7 @@
 package com.dx.dxloadingbutton;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -26,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
         final Button demoBtn = (Button) findViewById(R.id.btn_demo);
 
         final LoadingButton lb = (LoadingButton)findViewById(R.id.loading_btn);
+        lb.setTypeface(Typeface.SERIF);
         lb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -61,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
                 lb.cancelLoading();
             }
         });
+
 
         demoBtn.setOnClickListener(new View.OnClickListener() {
             @Override
