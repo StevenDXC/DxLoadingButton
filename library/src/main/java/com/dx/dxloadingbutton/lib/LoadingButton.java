@@ -17,6 +17,7 @@ import android.graphics.PathMeasure;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Typeface;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -297,6 +298,18 @@ public class LoadingButton extends View {
             mTextPaint.setTypeface(typeface);
             invalidate();
         }
+    }
+
+    public void setText(String text){
+        if(TextUtils.isEmpty(text)){
+            return;
+        }
+        this.mText = text;
+        mTextWidth = mTextPaint.measureText(mText);
+        Rect bounds = new Rect();
+        mTextPaint.getTextBounds(mText,0,mText.length(),bounds);
+        mTextHeight = bounds.height();
+        invalidate();
     }
 
 
