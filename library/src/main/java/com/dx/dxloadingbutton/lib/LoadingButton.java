@@ -86,7 +86,7 @@ public class LoadingButton extends View {
 
     private RectF mButtonRectF,mArcRectF;
 
-    private ValueAnimator mLoadingAnimator;
+    private AnimatorSet mLoadingAnimatorSet;
 
     public LoadingButton(Context context) {
         super(context);
@@ -254,8 +254,8 @@ public class LoadingButton extends View {
      * loading data successful
      */
     public void loadingSuccessful(){
-        if(mLoadingAnimator != null && mLoadingAnimator.isRunning()){
-            mLoadingAnimator.end();
+        if(mLoadingAnimatorSet != null && mLoadingAnimatorSet.isStarted()){
+            mLoadingAnimatorSet.end();
             mCurrentState = STATE_STOP_LOADING;
             playSuccessAnimation();
         }
@@ -265,8 +265,8 @@ public class LoadingButton extends View {
      * loading data failed
      */
     public void loadingFailed(){
-        if(mLoadingAnimator != null && mLoadingAnimator.isRunning()){
-            mLoadingAnimator.end();
+        if(mLoadingAnimatorSet != null && mLoadingAnimatorSet.isStarted()){
+            mLoadingAnimatorSet.end();
             mCurrentState = STATE_STOP_LOADING;
             playFailedAnimation();
         }
@@ -495,26 +495,26 @@ public class LoadingButton extends View {
             }
         });
 
-        mLoadingAnimator = ValueAnimator.ofInt(30,300);
-        mLoadingAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+        ValueAnimator loadingAnimator = ValueAnimator.ofInt(30,300);
+        loadingAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator valueAnimator) {
                 mAngle = (Integer) valueAnimator.getAnimatedValue();
                 invalidate();
             }
         });
-        mLoadingAnimator.setDuration(1000);
-        mLoadingAnimator.setRepeatCount(-1);
-        mLoadingAnimator.setRepeatMode(ValueAnimator.REVERSE);
-        mLoadingAnimator.setInterpolator(new AccelerateDecelerateInterpolator());
+        loadingAnimator.setDuration(1000);
+        loadingAnimator.setRepeatCount(-1);
+        loadingAnimator.setRepeatMode(ValueAnimator.REVERSE);
+        loadingAnimator.setInterpolator(new AccelerateDecelerateInterpolator());
 
-        AnimatorSet set = new AnimatorSet();
+        mLoadingAnimatorSet = new AnimatorSet();
         if(isReverse){
-            set.playSequentially(animator2,animator);
+            mLoadingAnimatorSet.playSequentially(animator2,animator);
         }else{
-            set.playSequentially(animator,animator2,mLoadingAnimator);
+            mLoadingAnimatorSet.playSequentially(animator,animator2,loadingAnimator);
         }
-        set.start();
+        mLoadingAnimatorSet.start();
     }
 
     private void playSuccessAnimation(){
