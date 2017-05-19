@@ -10,6 +10,8 @@ Demo:
    
 ![image](https://github.com/StevenDXC/DxLoadingButton/blob/master/image/loadingButton.gif)
 
+![image](https://github.com/StevenDXC/DxLoadingButton/blob/master/image/loadingButton2.gif)
+
 Usage:
 ---
 
