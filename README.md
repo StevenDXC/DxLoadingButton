@@ -10,7 +10,7 @@ Demo:
    
 ![image](https://github.com/StevenDXC/DxLoadingButton/blob/master/image/loadingButton.gif)
 
-
+with activity transition animation demo:
 
 ![image](https://github.com/StevenDXC/DxLoadingButton/blob/master/image/loadingButton2.gif)
 
