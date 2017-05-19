@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent">
+
+<LinearLayout
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:gravity="center"
@@ -34,5 +38,15 @@
         android:layout_marginRight="@dimen/activity_horizontal_margin"
         app:lb_btnText ="@string/button_text" />
 
-
 </LinearLayout>
+
+    <View
+            android:id="@+id/animate_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorPrimaryDark"
+            android:visibility="invisible"
+            />
+
+
+</FrameLayout>

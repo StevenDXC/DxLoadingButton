@@ -18,6 +18,8 @@
 
         <activity android:name=".demo.DemoActivity" />
 
+        <activity android:name=".demo.SecondActivity" />
+
     </application>
 
 </manifest>
