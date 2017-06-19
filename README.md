@@ -4,6 +4,7 @@ android button to loading view with animation,and load successful/failed animati
 
 
 [![](https://jitpack.io/v/StevenDXC/DxLoadingButton.svg)](https://jitpack.io/#StevenDXC/DxLoadingButton)
+[![API](https://img.shields.io/badge/API-16%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=16)
 
 Demo:
 ---
