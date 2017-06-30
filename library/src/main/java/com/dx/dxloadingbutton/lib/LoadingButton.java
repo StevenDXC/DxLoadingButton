@@ -504,10 +504,12 @@ public class LoadingButton extends View {
             }
         });
         loadingAnimator.setDuration(1000);
-        loadingAnimator.setRepeatCount(-1);
+        loadingAnimator.setRepeatCount(ValueAnimator.INFINITE);
         loadingAnimator.setRepeatMode(ValueAnimator.REVERSE);
         loadingAnimator.setInterpolator(new AccelerateDecelerateInterpolator());
-
+        if(mLoadingAnimatorSet != null) {
+            mLoadingAnimatorSet.cancel();
+        }
         mLoadingAnimatorSet = new AnimatorSet();
         if(isReverse){
             mLoadingAnimatorSet.playSequentially(animator2,animator);
