@@ -43,9 +43,9 @@ public class LoadingButton extends View {
     private AnimationEndListener mAnimationEndListener;
 
     private int mColorPrimary;
-    private int mDisableBgColor;
+    private int mDisabledBgColor;
     private int mTextColor;
-    private int mDisableTextColor;
+    private int mDisabledTextColor;
     private int mRippleColor;
     private float mRippleAlpha;
     private boolean resetAfterFailed; //when loading data failed, reset view to normal state
@@ -112,8 +112,8 @@ public class LoadingButton extends View {
         if(attrs != null){
             TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.LoadingButton, 0, 0);
             mColorPrimary = ta.getInt(R.styleable.LoadingButton_lb_btnColor,Color.BLUE);
-            mDisableBgColor = ta.getColor(R.styleable.LoadingButton_lb_btnDisableColor,Color.LTGRAY);
-            mDisableTextColor = ta.getColor(R.styleable.LoadingButton_lb_disableTextColor,Color.DKGRAY);
+            mDisabledBgColor = ta.getColor(R.styleable.LoadingButton_lb_btnDisableColor,Color.LTGRAY);
+            mDisabledTextColor = ta.getColor(R.styleable.LoadingButton_lb_disableTextColor,Color.DKGRAY);
             String text = ta.getString(R.styleable.LoadingButton_lb_btnText);
             mText = text == null ? "" : text;
             mTextColor = ta.getColor(R.styleable.LoadingButton_lb_textColor,Color.WHITE);
@@ -241,8 +241,8 @@ public class LoadingButton extends View {
             mPaint.setColor(mColorPrimary);
             mTextPaint.setColor(mTextColor);
         }else{
-            mPaint.setColor(mDisableBgColor);
-            mTextPaint.setColor(mDisableTextColor);
+            mPaint.setColor(mDisabledBgColor);
+            mTextPaint.setColor(mDisabledTextColor);
         }
         invalidate();
     }

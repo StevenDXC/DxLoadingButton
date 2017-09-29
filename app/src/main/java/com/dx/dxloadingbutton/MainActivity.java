@@ -65,6 +65,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.btn_cancel).setOnClickListener(this);
         findViewById(R.id.btn_demo).setOnClickListener(this);
         findViewById(R.id.btn_enable).setOnClickListener(this);
-        
+
     }
 }
