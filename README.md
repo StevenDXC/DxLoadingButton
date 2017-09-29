@@ -72,7 +72,7 @@ reset:
 
 add setEnable(true/false) logic for touchEvent,and add lb_btnDisableColor & lb_disableTextColor for display.
 
-* notice: lb_btnDisableColor & lb_disableTextColor only display while LoadingButton is normal button state, LoadingButton is playing animation or other state will display normal color *
+* notice: lb_btnDisableColor & lb_disableTextColor only display while LoadingButton is normal button state, LoadingButton is playing animation or other state will display normal color
 
 
 dependency
