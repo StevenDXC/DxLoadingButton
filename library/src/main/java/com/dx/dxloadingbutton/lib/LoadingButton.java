@@ -112,8 +112,8 @@ public class LoadingButton extends View {
         if(attrs != null){
             TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.LoadingButton, 0, 0);
             mColorPrimary = ta.getInt(R.styleable.LoadingButton_lb_btnColor,Color.BLUE);
-            mDisabledBgColor = ta.getColor(R.styleable.LoadingButton_lb_btnDisableColor,Color.LTGRAY);
-            mDisabledTextColor = ta.getColor(R.styleable.LoadingButton_lb_disableTextColor,Color.DKGRAY);
+            mDisabledBgColor = ta.getColor(R.styleable.LoadingButton_lb_btnDisabledColor,Color.LTGRAY);
+            mDisabledTextColor = ta.getColor(R.styleable.LoadingButton_lb_disabledTextColor,Color.DKGRAY);
             String text = ta.getString(R.styleable.LoadingButton_lb_btnText);
             mText = text == null ? "" : text;
             mTextColor = ta.getColor(R.styleable.LoadingButton_lb_textColor,Color.WHITE);
