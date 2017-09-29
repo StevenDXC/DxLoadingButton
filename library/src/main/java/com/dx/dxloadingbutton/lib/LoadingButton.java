@@ -4,6 +4,7 @@ package com.dx.dxloadingbutton.lib;
 import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ValueAnimator;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
@@ -206,6 +207,7 @@ public class LoadingButton extends View {
         return super.performClick();
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         if(!isEnabled()){
@@ -213,18 +215,16 @@ public class LoadingButton extends View {
         }
         switch (event.getAction()){
             case MotionEvent.ACTION_DOWN:
-                 mTouchX = event.getX();
-                 mTouchY = event.getY();
-                 playRippleAnimation(true);
-                 break;
+                mTouchX = event.getX();
+                mTouchY = event.getY();
+                playRippleAnimation(true);
+                break;
             case MotionEvent.ACTION_UP:
-            case MotionEvent.ACTION_CANCEL:
                 playRippleAnimation(false);
-                performClick();
-                return false;
+                break;
         }
 
-        return super.onTouchEvent(event);
+        return true;
     }
 
     @Override
@@ -741,7 +741,7 @@ public class LoadingButton extends View {
         scaleAnimator.start();
     }
 
-    private void playRippleAnimation(boolean isTouchDown){
+    private void playRippleAnimation(final boolean isTouchDown){
         setShadowDepth2();
         ValueAnimator rippleAnimator = ValueAnimator.ofFloat(isTouchDown ? 0 : width/2, isTouchDown ? width/2 : width);
         rippleAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
