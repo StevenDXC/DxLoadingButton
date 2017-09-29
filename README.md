@@ -29,6 +29,8 @@ layout:
      android:layout_height="wrap_content"
      app:lb_resetAfterFailed="true"
      app:lb_btnRippleColor="#000000"
+     app:lb_btnDisableColor="#cccccc" //disable btn color
+     app:lb_disableTextColor="999999" 
      app:lb_btnText="@string/button_text" 
 />
 ```
@@ -64,6 +66,13 @@ reset:
 ```java
  lb.reset();
 ```
+
+
+### release 1.6
+
+add setEnable(true/false) logic for touchEvent,and add lb_btnDisableColor & lb_disableTextColor for display.
+notice: lb_btnDisableColor & lb_disableTextColor only display while LoadingButton is normal button state, LoadingButton is playing animation or other state will display normal color
+
 
 dependency
 ---
