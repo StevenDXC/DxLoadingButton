@@ -68,7 +68,7 @@ reset:
 ```
 
 
-## release 1.8
+## release 1.9
 
 add setEnable(true/false) logic for touchEvent,and add lb_btnDisabledColor & lb_disabledTextColor for display.
 
@@ -91,6 +91,6 @@ add dependency：
 
 ```java
 dependencies {
-    compile 'com.github.StevenDXC:DxLoadingButton:1.8'
+    compile 'com.github.StevenDXC:DxLoadingButton:1.9'
 }
 ```
