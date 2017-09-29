@@ -58,12 +58,25 @@
         />
 
 
-    <Button
-        android:id="@+id/btn_demo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|center_horizontal"
-        android:layout_marginBottom="32dp"
-        android:text="login Demo"/>
+   <LinearLayout
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:layout_gravity="bottom"
+       android:gravity="center">
+
+       <Button
+           android:id="@+id/btn_enable"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text="enable/disenable"/>
+
+       <Button
+           android:id="@+id/btn_demo"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_marginLeft="30dp"
+           android:text="login Demo"/>
+
+   </LinearLayout>
 
 </FrameLayout>

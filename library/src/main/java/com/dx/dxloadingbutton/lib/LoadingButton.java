@@ -43,10 +43,12 @@ public class LoadingButton extends View {
     private AnimationEndListener mAnimationEndListener;
 
     private int mColorPrimary;
+    private int mDisableBgColor;
     private int mTextColor;
+    private int mDisableTextColor;
     private int mRippleColor;
     private float mRippleAlpha;
-    private boolean resetAfterFailed; //when loading data failed, whether reset view
+    private boolean resetAfterFailed; //when loading data failed, reset view to normal state
     private String mText;
 
     private float mPadding;
@@ -108,9 +110,10 @@ public class LoadingButton extends View {
     private void init(Context context,AttributeSet attrs){
 
         if(attrs != null){
-            int defaultColor = Color.BLUE;
             TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.LoadingButton, 0, 0);
-            mColorPrimary = ta.getInt(R.styleable.LoadingButton_lb_btnColor,defaultColor);
+            mColorPrimary = ta.getInt(R.styleable.LoadingButton_lb_btnColor,Color.BLUE);
+            mDisableBgColor = ta.getColor(R.styleable.LoadingButton_lb_btnDisableColor,Color.LTGRAY);
+            mDisableTextColor = ta.getColor(R.styleable.LoadingButton_lb_disableTextColor,Color.DKGRAY);
             String text = ta.getString(R.styleable.LoadingButton_lb_btnText);
             mText = text == null ? "" : text;
             mTextColor = ta.getColor(R.styleable.LoadingButton_lb_textColor,Color.WHITE);
@@ -199,13 +202,23 @@ public class LoadingButton extends View {
     }
 
     @Override
+    public boolean performClick() {
+        return super.performClick();
+    }
+
+    @Override
     public boolean onTouchEvent(MotionEvent event) {
         switch (event.getAction()){
             case MotionEvent.ACTION_DOWN:
                 mTouchX = event.getX();
                 mTouchY = event.getY();
-                playRippleAnimation(true);
-                break;
+                if(this.isEnabled()){
+                    performClick();
+                    playRippleAnimation(true);
+                    return super.onTouchEvent(event);
+                }else{
+                    return false;
+                }
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_CANCEL:
                 playRippleAnimation(false);
@@ -213,6 +226,25 @@ public class LoadingButton extends View {
         }
 
         return super.onTouchEvent(event);
+    }
+
+    @Override
+    public void setEnabled(boolean enabled) {
+        super.setEnabled(enabled);
+        if(mCurrentState == STATE_BUTTON){
+           checkEnabled();
+        }
+    }
+
+    private void checkEnabled() {
+        if(isEnabled()){
+            mPaint.setColor(mColorPrimary);
+            mTextPaint.setColor(mTextColor);
+        }else{
+            mPaint.setColor(mDisableBgColor);
+            mTextPaint.setColor(mDisableTextColor);
+        }
+        invalidate();
     }
 
     private int measureDimension(int defaultSize, int measureSpec) {
@@ -492,6 +524,9 @@ public class LoadingButton extends View {
             @Override
             public void onAnimationEnd(Animator animator) {
                 mCurrentState = isReverse ? STATE_ANIMATION_STEP1 : STATE_ANIMATION_LOADING;
+                if(!isReverse){
+                    checkEnabled();
+                }
             }
         });
 
@@ -513,6 +548,7 @@ public class LoadingButton extends View {
         mLoadingAnimatorSet = new AnimatorSet();
         if(isReverse){
             mLoadingAnimatorSet.playSequentially(animator2,animator);
+            checkEnabled();
         }else{
             mLoadingAnimatorSet.playSequentially(animator,animator2,loadingAnimator);
         }

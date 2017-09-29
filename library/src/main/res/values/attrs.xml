@@ -2,8 +2,10 @@
 <resources>
     <declare-styleable name="LoadingButton">
         <attr name="lb_btnColor" format="reference|color" />
+        <attr name="lb_btnDisableColor" format="reference|color" />
         <attr name="lb_btnText" format="reference|string" />
         <attr name="lb_textColor" format="reference|string" />
+        <attr name="lb_disableTextColor" format="reference|string" />
         <attr name="lb_resetAfterFailed" format="boolean" />
         <attr name="lb_btnRippleColor" format="reference|color" />
         <attr name="lb_btnRippleAlpha" format="float" />
