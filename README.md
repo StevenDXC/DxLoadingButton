@@ -29,6 +29,8 @@ layout:
      android:layout_height="wrap_content"
      app:lb_resetAfterFailed="true"
      app:lb_btnRippleColor="#000000"
+     app:lb_btnDisabledColor="#cccccc"
+     app:lb_disabledTextColor="999999" 
      app:lb_btnText="@string/button_text" 
 />
 ```
@@ -65,6 +67,14 @@ reset:
  lb.reset();
 ```
 
+
+### release 1.7
+
+add setEnable(true/false) logic for touchEvent,and add lb_btnDisabledColor & lb_disabledTextColor for display.
+
+* notice: lb_btnDisabledColor & lb_disabledTextColor only display while LoadingButton is normal button state, LoadingButton is playing animation or other state will display normal color
+
+
 dependency
 ---
 Add it in your root build.gradle at the end of repositories:
@@ -81,6 +91,6 @@ add dependency：
 
 ```java
 dependencies {
-    compile 'com.github.StevenDXC:DxLoadingButton:1.5'
+    compile 'com.github.StevenDXC:DxLoadingButton:1.7'
 }
 ```
