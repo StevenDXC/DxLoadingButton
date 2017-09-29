@@ -208,21 +208,20 @@ public class LoadingButton extends View {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+        if(!isEnabled()){
+            return true;
+        }
         switch (event.getAction()){
             case MotionEvent.ACTION_DOWN:
-                mTouchX = event.getX();
-                mTouchY = event.getY();
-                if(this.isEnabled()){
-                    performClick();
-                    playRippleAnimation(true);
-                    return super.onTouchEvent(event);
-                }else{
-                    return false;
-                }
+                 mTouchX = event.getX();
+                 mTouchY = event.getY();
+                 playRippleAnimation(true);
+                 break;
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_CANCEL:
                 playRippleAnimation(false);
-                return true;
+                performClick();
+                return false;
         }
 
         return super.onTouchEvent(event);

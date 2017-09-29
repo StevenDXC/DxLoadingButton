@@ -8,12 +8,14 @@
     tools:context="com.dx.dxloadingbutton.MainActivity">
 
     <LinearLayout
+        style="?android:buttonBarButtonStyle"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical">
 
     <Button
+        style="?android:buttonBarButtonStyle"
         android:id="@+id/btn_success"
         android:layout_weight="1"
         android:layout_width="0dp"
@@ -22,6 +24,7 @@
         android:text="successful"/>
 
     <Button
+        style="?android:buttonBarButtonStyle"
         android:id="@+id/btn_failed"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -29,6 +32,7 @@
         android:text="failed"/>
 
     <Button
+        style="?android:buttonBarButtonStyle"
         android:id="@+id/btn_reset"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -37,6 +41,7 @@
 
 
     <Button
+        style="?android:buttonBarButtonStyle"
         android:id="@+id/btn_cancel"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -62,19 +67,22 @@
        android:layout_width="match_parent"
        android:layout_height="wrap_content"
        android:layout_gravity="bottom"
+       android:layout_marginBottom="24dp"
        android:gravity="center">
 
        <Button
+           style="?android:buttonBarButtonStyle"
            android:id="@+id/btn_enable"
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"
            android:text="enable/disenable"/>
 
        <Button
+           style="?android:buttonBarButtonStyle"
            android:id="@+id/btn_demo"
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"
-           android:layout_marginLeft="30dp"
+           android:layout_marginStart="30dp"
            android:text="login Demo"/>
 
    </LinearLayout>
