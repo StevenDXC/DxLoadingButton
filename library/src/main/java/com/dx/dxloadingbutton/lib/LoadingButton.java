@@ -210,20 +210,29 @@ public class LoadingButton extends View {
     @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        if(!isEnabled()){
+        if(!isEnabled()) {
             return true;
         }
-        switch (event.getAction()){
+        switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 mTouchX = event.getX();
                 mTouchY = event.getY();
                 playRippleAnimation(true);
                 break;
             case MotionEvent.ACTION_UP:
-                playRippleAnimation(false);
+                if ((event.getX() > mButtonRectF.left && event.getX() < mButtonRectF.right) &&
+                        (event.getY() > mButtonRectF.top && event.getY() < mButtonRectF.bottom)) {
+                    // only register as click if finger is up inside view
+                    playRippleAnimation(false);
+                } else {
+                    // if finger is moved outside view and lifted up, reset
+                    mTouchX = 0;
+                    mTouchY = 0;
+                    mRippleRadius = 0;
+                    invalidate();
+                }
                 break;
         }
-
         return true;
     }
 
