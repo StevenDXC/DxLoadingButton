@@ -31,7 +31,7 @@ layout:
      app:lb_btnRippleColor="#000000"
      app:lb_btnDisabledColor="#cccccc"
      app:lb_disabledTextColor="999999" 
-     app:lb_btnText="@string/button_text" 
+     app:lb_btnText="@string/button_text" 					    
 />
 ```
 code:
@@ -67,13 +67,12 @@ reset:
  lb.reset();
 ```
 
+enable:
 
-## release 1.9
-
-add setEnable(true/false) logic for touchEvent,and add lb_btnDisabledColor & lb_disabledTextColor for display.
-
+```java
+ lb.setEnable(true/false); 
+```
 * notice: lb_btnDisabledColor & lb_disabledTextColor only display while LoadingButton is normal button state, LoadingButton is playing animation or other state will display normal color
-
 
 dependency
 ---
