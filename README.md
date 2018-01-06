@@ -1,3 +1,10 @@
+
+**This fork contains some extra functionality, the ability to programatically update text color and size during app runtime.
+Get it [here, on jitpack](https://jitpack.io/#Lissy93/DxLoadingButton/programmatically-set-button-text-styles-SNAPSHOT).**
+
+With thanks to [@StevenDXC](https://github.com/StevenDXC) for the origional, which is [here](https://github.com/StevenDXC/DxLoadingButton) 🙌.
+
+
 # DxLoadingButton
 
 android button to loading view with animation,and load successful/failed animation
