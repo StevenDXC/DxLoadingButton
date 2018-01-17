@@ -30,7 +30,7 @@ layout:
      app:lb_resetAfterFailed="true"
      app:lb_btnRippleColor="#000000"
      app:lb_btnDisabledColor="#cccccc"
-     app:lb_disabledTextColor="999999" 
+     app:lb_disabledTextColor="#999999" 
      app:lb_btnText="@string/button_text" 					    
 />
 ```
