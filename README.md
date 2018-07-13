@@ -30,7 +30,8 @@ layout:
      app:lb_resetAfterFailed="true"
      app:lb_btnRippleColor="#000000"
      app:lb_btnDisabledColor="#cccccc"
-     app:lb_disabledTextColor="#999999" 
+     app:lb_disabledTextColor="#999999"
+     app:lb_cornerRadius="32"
      app:lb_btnText="@string/button_text" 					    
 />
 ```
@@ -73,6 +74,21 @@ enable:
  lb.setEnable(true/false); 
 ```
 * notice: lb_btnDisabledColor & lb_disabledTextColor only display while LoadingButton is normal button state, LoadingButton is playing animation or other state will display normal color
+
+   
+![image](https://github.com/StevenDXC/DxLoadingButton/blob/master/image/loadingButton_shader.jpg)
+
+backgroundShader:
+
+```java
+lb.setBackgroundShader(new LinearGradient(0f,0f,1000f,100f, 0xAAE53935, 0xAAFF5722, Shader.TileMode.CLAMP););
+```
+cornerRadius:
+
+```java
+lb.setCornerRadius(32f)
+```
+
 
 dependency
 ---
