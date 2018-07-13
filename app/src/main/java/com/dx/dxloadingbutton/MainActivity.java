@@ -58,8 +58,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         lb = findViewById(R.id.loading_btn);
         lb.setTypeface(Typeface.SERIF);
         lb.setOnClickListener(this);
-        lb.setCornerRadius(32f);
-        Shader shader = new LinearGradient(0f,0f,1000f,100f, Color.GREEN, Color.BLUE, Shader.TileMode.CLAMP);
+        lb.setCornerRadius(100f);
+        Shader shader = new LinearGradient(0f,0f,1000f,100f, 0xAAE53935, 0xAAFF5722, Shader.TileMode.CLAMP);
         lb.setBackgroundShader(shader);
 
         findViewById(R.id.btn_success).setOnClickListener(this);
