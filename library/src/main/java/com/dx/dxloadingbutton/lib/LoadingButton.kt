@@ -44,19 +44,22 @@ class LoadingButton @JvmOverloads constructor(
 
     var animationEndAction: ((AnimationType) -> Unit)? = null
 
-    var textColor = DEFAULT_COLOR
+    var textColor
+        get() = mTextColor
         set(value) {
             mTextColor = value
             invalidate()
         }
 
-    var typeface: Typeface = Typeface.DEFAULT
+    var typeface: Typeface
+        get() = mTextPaint.typeface
         set(value) {
             mTextPaint.typeface = value
             invalidate()
         }
 
-    var text = ""
+    var text
+        get() = mText
         set(value) {
             if (text.isEmpty()) {
                 return
@@ -70,14 +73,16 @@ class LoadingButton @JvmOverloads constructor(
     /**
      * set button text, dip
      */
-    var textSize = 16 * mDensity
+    var textSize
+        get() = (mTextPaint.textSize / mDensity).toInt()
         set(value) {
             mTextPaint.textSize = value * mDensity
             mTextWidth = mTextPaint.measureText(mText)
             invalidate()
        }
 
-    var cornerRadius = 2 * mDensity
+    var cornerRadius
+        get() = mButtonCorner
         set(value) {
             mButtonCorner = value
             invalidate()
@@ -165,6 +170,7 @@ class LoadingButton @JvmOverloads constructor(
             resetAfterFailed = ta.getBoolean(R.styleable.LoadingButton_lb_resetAfterFailed, true)
             mRippleColor = ta.getColor(R.styleable.LoadingButton_lb_btnRippleColor, Color.BLACK)
             mRippleAlpha = ta.getFloat(R.styleable.LoadingButton_lb_btnRippleAlpha, 0.3f)
+            mButtonCorner = ta.getFloat(R.styleable.LoadingButton_lb_cornerRadius, 2 * mDensity)
             ta.recycle()
         }
 

@@ -7,6 +7,7 @@
         <attr name="lb_resetAfterFailed" format="boolean" />
         <attr name="lb_btnRippleColor" format="reference|color" />
         <attr name="lb_btnRippleAlpha" format="float" />
+        <attr name="lb_cornerRadius" format="float" />
         <attr name="lb_btnDisabledColor" format="reference|color" />
         <attr name="lb_disabledTextColor" format="reference|string" />
     </declare-styleable>
