@@ -106,6 +106,6 @@ add dependency：
 
 ```java
 dependencies {
-    compile 'com.github.StevenDXC:DxLoadingButton:2.0'
+    compile 'com.github.StevenDXC:DxLoadingButton:2.1'
 }
 ```
