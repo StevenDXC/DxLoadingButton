@@ -13,7 +13,11 @@ import android.widget.Toast;
 
 import com.dx.dxloadingbutton.MainActivity;
 import com.dx.dxloadingbutton.R;
+import com.dx.dxloadingbutton.lib.AnimationType;
 import com.dx.dxloadingbutton.lib.LoadingButton;
+
+import kotlin.Unit;
+import kotlin.jvm.functions.Function1;
 
 
 public class DemoActivity extends AppCompatActivity {
@@ -29,20 +33,22 @@ public class DemoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_demo);
 
-        mLoadingBtn = (LoadingButton)findViewById(R.id.loading_btn);
+        mLoadingBtn = findViewById(R.id.loading_btn);
         //while login failed, reset view to button with animation
         mLoadingBtn.setResetAfterFailed(true);
-        mLoadingBtn.setAnimationEndListener(new LoadingButton.AnimationEndListener() {
+        mLoadingBtn.setAnimationEndAction(new Function1<AnimationType, Unit>() {
             @Override
-            public void onAnimationEnd(LoadingButton.AnimationType animationType) {
-                if(animationType == LoadingButton.AnimationType.SUCCESSFUL){
+            public Unit invoke(AnimationType animationType) {
+                if(animationType == AnimationType.SUCCESSFUL){
                     startActivity(new Intent(DemoActivity.this, MainActivity.class));
                 }
+                return Unit.INSTANCE;
             }
         });
 
-        mEditUserName = (EditText) findViewById(R.id.edit_user_name);
-        mEditPassword = (EditText) findViewById(R.id.edit_password);
+
+        mEditUserName = findViewById(R.id.edit_user_name);
+        mEditPassword = findViewById(R.id.edit_password);
 
         animateView = findViewById(R.id.animate_view);
         mLoadingBtn.setOnClickListener(new View.OnClickListener() {
@@ -81,10 +87,11 @@ public class DemoActivity extends AppCompatActivity {
                if("admin".endsWith(userName) && "admin".equals(password)){
                    //login success
                    mLoadingBtn.loadingSuccessful();
-                   mLoadingBtn.setAnimationEndListener(new LoadingButton.AnimationEndListener() {
+                   mLoadingBtn.setAnimationEndAction(new Function1<AnimationType, Unit>() {
                        @Override
-                       public void onAnimationEnd(LoadingButton.AnimationType animationType) {
+                       public Unit invoke(AnimationType animationType) {
                            toNextPage();
+                           return Unit.INSTANCE;
                        }
                    });
                }else{

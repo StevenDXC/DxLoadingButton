@@ -1,12 +1,13 @@
 package com.dx.dxloadingbutton;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.LinearGradient;
+import android.graphics.Shader;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
 import com.dx.dxloadingbutton.demo.DemoActivity;
@@ -30,7 +31,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.btn_failed:
                 lb.loadingFailed();
-                Toast.makeText(getApplicationContext(),"login failed,try again",Toast.LENGTH_SHORT).show();
                 break;
             case R.id.btn_reset:
                 lb.reset();
@@ -55,9 +55,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        lb = (LoadingButton)findViewById(R.id.loading_btn);
+        lb = findViewById(R.id.loading_btn);
         lb.setTypeface(Typeface.SERIF);
         lb.setOnClickListener(this);
+        lb.setCornerRadius(32f);
+        Shader shader = new LinearGradient(0f,0f,1000f,100f, Color.GREEN, Color.BLUE, Shader.TileMode.CLAMP);
+        lb.setBackgroundShader(shader);
 
         findViewById(R.id.btn_success).setOnClickListener(this);
         findViewById(R.id.btn_failed).setOnClickListener(this);
