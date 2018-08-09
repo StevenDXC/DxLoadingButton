@@ -81,7 +81,7 @@ enable:
 backgroundShader:
 
 ```java
-lb.setBackgroundShader(new LinearGradient(0f,0f,1000f,100f, 0xAAE53935, 0xAAFF5722, Shader.TileMode.CLAMP););
+lb.setBackgroundShader(new LinearGradient(0f,0f,1000f,100f, 0xAAE53935, 0xAAFF5722, Shader.TileMode.CLAMP));
 ```
 cornerRadius:
 
