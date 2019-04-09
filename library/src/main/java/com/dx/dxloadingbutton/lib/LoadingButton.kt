@@ -39,10 +39,15 @@ class LoadingButton @JvmOverloads constructor(
         private const val DEFAULT_TEXT_COLOR = Color.WHITE
     }
 
-    private val mDensity = resources.displayMetrics.density
-    private var mCurrentState = STATE_BUTTON
-
     var animationEndAction: ((AnimationType) -> Unit)? = null
+
+    var rippleEnable = true
+
+    var rippleColor = Color.BLACK
+        set(value){
+            ripplePaint.color = value
+            field = value
+        }
 
     var textColor
         get() = mTextColor
@@ -104,16 +109,14 @@ class LoadingButton @JvmOverloads constructor(
             invalidate()
         }
 
-    val currentState = mCurrentState
-
+    private val mDensity = resources.displayMetrics.density
+    private var mCurrentState = STATE_BUTTON
 
     private var mColorPrimary = DEFAULT_COLOR
     private var mDisabledBgColor = Color.LTGRAY
     private var mTextColor = Color.WHITE
     private var mDisabledTextColor = Color.DKGRAY
-    private var mRippleColor = Color.BLACK
     private var mRippleAlpha = 0.3f
-
 
     private var mPadding = 6 * mDensity
 
@@ -157,7 +160,6 @@ class LoadingButton @JvmOverloads constructor(
     private var mText: String = ""
     private var mLoadingAnimatorSet: AnimatorSet? = null
 
-
     init {
         if (attrs != null) {
             val ta = context.obtainStyledAttributes(attrs, R.styleable.LoadingButton, 0, 0)
@@ -168,7 +170,7 @@ class LoadingButton @JvmOverloads constructor(
             mText = text ?: ""
             mTextColor = ta.getColor(R.styleable.LoadingButton_lb_textColor, Color.WHITE)
             resetAfterFailed = ta.getBoolean(R.styleable.LoadingButton_lb_resetAfterFailed, true)
-            mRippleColor = ta.getColor(R.styleable.LoadingButton_lb_btnRippleColor, Color.BLACK)
+            rippleColor = ta.getColor(R.styleable.LoadingButton_lb_btnRippleColor, Color.BLACK)
             mRippleAlpha = ta.getFloat(R.styleable.LoadingButton_lb_btnRippleAlpha, 0.3f)
             mButtonCorner = ta.getFloat(R.styleable.LoadingButton_lb_cornerRadius, 2 * mDensity)
             ta.recycle()
@@ -184,7 +186,7 @@ class LoadingButton @JvmOverloads constructor(
 
         ripplePaint.apply {
             isAntiAlias = true
-            color = mRippleColor
+            color = rippleColor
             alpha = (mRippleAlpha * 255).toInt()
             style = Paint.Style.FILL
         }
@@ -283,7 +285,7 @@ class LoadingButton @JvmOverloads constructor(
                 canvas.drawRoundRect(mButtonRectF, cornerRadius, cornerRadius, mPaint)
                 if (mCurrentState == STATE_BUTTON) {
                     canvas.drawText(mText, (width - mTextWidth) / 2, (height - mTextHeight) / 2 + mPadding * 2, mTextPaint)
-                    if (mTouchX > 0 || mTouchY > 0) {
+                    if ((mTouchX > 0 || mTouchY > 0) && rippleEnable) {
                         canvas.clipRect(0f, mPadding, width.toFloat(), height - mPadding)
                         canvas.drawCircle(mTouchX, mTouchY, mRippleRadius, ripplePaint)
                     }
@@ -314,12 +316,12 @@ class LoadingButton @JvmOverloads constructor(
                 canvas.drawPath(mPath, mStrokePaint)
             }
             STATE_ANIMATION_SUCCESS -> {
-                canvas.drawPath(mSuccessPath, mPathEffectPaint)
+                canvas.drawPath(mSuccessPath!!, mPathEffectPaint)
                 canvas.drawCircle((width / 2).toFloat(), (height / 2).toFloat(), mRadius - mDensity, mStrokePaint)
             }
             STATE_ANIMATION_FAILED -> {
-                canvas.drawPath(mFailedPath, mPathEffectPaint)
-                canvas.drawPath(mFailedPath2, mPathEffectPaint2)
+                canvas.drawPath(mFailedPath!!, mPathEffectPaint)
+                canvas.drawPath(mFailedPath2!!, mPathEffectPaint2)
                 canvas.drawCircle((width / 2).toFloat(), (height / 2).toFloat(), mRadius - mDensity, mStrokePaint)
             }
         }
@@ -568,7 +570,9 @@ class LoadingButton @JvmOverloads constructor(
 
         AnimatorSet().apply {
                     playSequentially(animator, successAnimator)
-                    doOnEnd { animationEndAction?.invoke(AnimationType.SUCCESSFUL) }
+                    doOnEnd {
+                        animationEndAction?.invoke(AnimationType.SUCCESSFUL)
+                    }
                 }.start()
     }
 

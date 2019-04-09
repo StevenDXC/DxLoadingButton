@@ -5,6 +5,7 @@
         <attr name="lb_btnText" format="reference|string" />
         <attr name="lb_textColor" format="reference|string" />
         <attr name="lb_resetAfterFailed" format="boolean" />
+        <attr name="lb_rippleEnable" format="boolean" />
         <attr name="lb_btnRippleColor" format="reference|color" />
         <attr name="lb_btnRippleAlpha" format="float" />
         <attr name="lb_cornerRadius" format="float" />
