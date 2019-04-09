@@ -35,7 +35,9 @@ class DemoActivity : AppCompatActivity(), View.OnClickListener {
                 loading_btn.cancelLoading()
                 startActivity(Intent(this@DemoActivity, LoginDemoActivity::class.java))
             }
-            R.id.btn_enable -> loading_btn.isEnabled = !loading_btn.isEnabled
+            R.id.btn_enable -> {
+                loading_btn.isEnabled = !loading_btn.isEnabled
+            }
         }
     }
 

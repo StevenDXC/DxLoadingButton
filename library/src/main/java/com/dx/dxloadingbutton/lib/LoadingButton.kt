@@ -42,6 +42,10 @@ class LoadingButton @JvmOverloads constructor(
     var animationEndAction: ((AnimationType) -> Unit)? = null
 
     var rippleEnable = true
+        set(value) {
+            invalidate()
+            field = value
+        }
 
     var rippleColor = Color.BLACK
         set(value){
@@ -171,6 +175,7 @@ class LoadingButton @JvmOverloads constructor(
             mTextColor = ta.getColor(R.styleable.LoadingButton_lb_textColor, Color.WHITE)
             resetAfterFailed = ta.getBoolean(R.styleable.LoadingButton_lb_resetAfterFailed, true)
             rippleColor = ta.getColor(R.styleable.LoadingButton_lb_btnRippleColor, Color.BLACK)
+            rippleEnable = ta.getBoolean(R.styleable.LoadingButton_lb_rippleEnable, true)
             mRippleAlpha = ta.getFloat(R.styleable.LoadingButton_lb_btnRippleAlpha, 0.3f)
             mButtonCorner = ta.getFloat(R.styleable.LoadingButton_lb_cornerRadius, 2 * mDensity)
             ta.recycle()
