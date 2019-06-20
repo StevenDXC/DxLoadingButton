@@ -7,6 +7,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:gravity="center"
+    android:layout_marginTop="230dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -34,9 +35,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="48dp"
+        android:minHeight="48dp"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_marginRight="@dimen/activity_horizontal_margin"
-        app:lb_btnText ="@string/button_text" />
+        app:lb_btnText ="@string/button_text"
+        app:lb_min_height="48dp"/>
 
 </LinearLayout>
 

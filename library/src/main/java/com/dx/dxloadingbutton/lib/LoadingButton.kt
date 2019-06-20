@@ -11,6 +11,8 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.view.animation.DecelerateInterpolator
+import kotlin.math.max
+import kotlin.math.min
 
 enum class AnimationType{
     SUCCESSFUL,
@@ -37,7 +39,12 @@ class LoadingButton @JvmOverloads constructor(
 
         private const val DEFAULT_COLOR = Color.BLUE
         private const val DEFAULT_TEXT_COLOR = Color.WHITE
+
     }
+
+    private val mDensity = resources.displayMetrics.density
+
+    private val defaultMinHeight = 48 * mDensity
 
     var animationEndAction: ((AnimationType) -> Unit)? = null
 
@@ -113,8 +120,9 @@ class LoadingButton @JvmOverloads constructor(
             invalidate()
         }
 
-    private val mDensity = resources.displayMetrics.density
+
     private var mCurrentState = STATE_BUTTON
+    private var mMinHeight = defaultMinHeight
 
     private var mColorPrimary = DEFAULT_COLOR
     private var mDisabledBgColor = Color.LTGRAY
@@ -178,11 +186,12 @@ class LoadingButton @JvmOverloads constructor(
             rippleEnable = ta.getBoolean(R.styleable.LoadingButton_lb_rippleEnable, true)
             mRippleAlpha = ta.getFloat(R.styleable.LoadingButton_lb_btnRippleAlpha, 0.3f)
             mButtonCorner = ta.getFloat(R.styleable.LoadingButton_lb_cornerRadius, 2 * mDensity)
+            mMinHeight = ta.getDimension(R.styleable.LoadingButton_lb_min_height, defaultMinHeight)
             ta.recycle()
         }
 
         mPaint.apply {
-            setLayerType(View.LAYER_TYPE_SOFTWARE, this)
+            setLayerType(LAYER_TYPE_SOFTWARE, this)
             isAntiAlias = true
             color = mColorPrimary
             style = Paint.Style.FILL
@@ -237,15 +246,14 @@ class LoadingButton @JvmOverloads constructor(
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
-        mRadius = (height - mPadding * 2).toInt() / 2
-
+        val viewHeight = max(h, mMinHeight.toInt())
+        mRadius = (viewHeight - mPadding * 2).toInt() / 2
         mButtonRectF.top = mPadding
-        mButtonRectF.bottom = height - mPadding
-
+        mButtonRectF.bottom = viewHeight - mPadding
         mArcRectF.left = (width / 2 - mRadius).toFloat()
         mArcRectF.top = mPadding
         mArcRectF.right = (width / 2 + mRadius).toFloat()
-        mArcRectF.bottom = height - mPadding
+        mArcRectF.bottom = viewHeight - mPadding
     }
 
     override fun setEnabled(enabled: Boolean) {
@@ -282,29 +290,30 @@ class LoadingButton @JvmOverloads constructor(
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
+        val viewHeight = max(height, mMinHeight.toInt())
         when (mCurrentState) {
             STATE_BUTTON, STATE_ANIMATION_STEP1 -> {
-                val cornerRadius = (mRadius - mButtonCorner) * (mScaleWidth / (width / 2 - height / 2).toFloat()) + mButtonCorner
+                val cornerRadius = (mRadius - mButtonCorner) * (mScaleWidth / (width / 2 - viewHeight / 2).toFloat()) + mButtonCorner
                 mButtonRectF.left = mScaleWidth.toFloat()
                 mButtonRectF.right = (width - mScaleWidth).toFloat()
                 canvas.drawRoundRect(mButtonRectF, cornerRadius, cornerRadius, mPaint)
                 if (mCurrentState == STATE_BUTTON) {
-                    canvas.drawText(mText, (width - mTextWidth) / 2, (height - mTextHeight) / 2 + mPadding * 2, mTextPaint)
+                    canvas.drawText(mText, (width - mTextWidth) / 2, (viewHeight - mTextHeight) / 2 + mPadding * 2, mTextPaint)
                     if ((mTouchX > 0 || mTouchY > 0) && rippleEnable) {
-                        canvas.clipRect(0f, mPadding, width.toFloat(), height - mPadding)
+                        canvas.clipRect(0f, mPadding, width.toFloat(), viewHeight - mPadding)
                         canvas.drawCircle(mTouchX, mTouchY, mRippleRadius, ripplePaint)
                     }
                 }
             }
             STATE_ANIMATION_STEP2 -> {
-                canvas.drawCircle((width / 2).toFloat(), (height / 2).toFloat(), (mRadius - mScaleHeight).toFloat(), mPaint)
-                canvas.drawCircle((width / 2).toFloat(), (height / 2).toFloat(), mRadius - mDensity, mStrokePaint)
+                canvas.drawCircle((width / 2).toFloat(), (viewHeight / 2).toFloat(), (mRadius - mScaleHeight).toFloat(), mPaint)
+                canvas.drawCircle((width / 2).toFloat(), (viewHeight / 2).toFloat(), mRadius - mDensity, mStrokePaint)
             }
             STATE_ANIMATION_LOADING -> {
                 mPath.reset()
                 mPath.addArc(mArcRectF, (270 + mAngle / 2).toFloat(), (360 - mAngle).toFloat())
                 if (mAngle != 0) {
-                    mMatrix.setRotate(mDegree.toFloat(), (width / 2).toFloat(), (height / 2).toFloat())
+                    mMatrix.setRotate(mDegree.toFloat(), (width / 2).toFloat(), (viewHeight / 2).toFloat())
                     mPath.transform(mMatrix)
                     mDegree += 10
                 }
@@ -314,7 +323,7 @@ class LoadingButton @JvmOverloads constructor(
                 mPath.reset()
                 mPath.addArc(mArcRectF, (270 + mAngle / 2).toFloat(), mEndAngle.toFloat())
                 if (mEndAngle != 360) {
-                    mMatrix.setRotate(mDegree.toFloat(), (width / 2).toFloat(), (height / 2).toFloat())
+                    mMatrix.setRotate(mDegree.toFloat(), (width / 2).toFloat(), (viewHeight / 2).toFloat())
                     mPath.transform(mMatrix)
                     mDegree += 10
                 }
@@ -322,12 +331,12 @@ class LoadingButton @JvmOverloads constructor(
             }
             STATE_ANIMATION_SUCCESS -> {
                 canvas.drawPath(mSuccessPath!!, mPathEffectPaint)
-                canvas.drawCircle((width / 2).toFloat(), (height / 2).toFloat(), mRadius - mDensity, mStrokePaint)
+                canvas.drawCircle((width / 2).toFloat(), (viewHeight / 2).toFloat(), mRadius - mDensity, mStrokePaint)
             }
             STATE_ANIMATION_FAILED -> {
                 canvas.drawPath(mFailedPath!!, mPathEffectPaint)
                 canvas.drawPath(mFailedPath2!!, mPathEffectPaint2)
-                canvas.drawCircle((width / 2).toFloat(), (height / 2).toFloat(), mRadius - mDensity, mStrokePaint)
+                canvas.drawCircle((width / 2).toFloat(), (viewHeight / 2).toFloat(), mRadius - mDensity, mStrokePaint)
             }
         }
     }
@@ -446,10 +455,10 @@ class LoadingButton @JvmOverloads constructor(
     }
 
     private fun measureDimension(defaultSize: Int, measureSpec: Int) =
-            when (View.MeasureSpec.getMode(measureSpec)) {
-                View.MeasureSpec.EXACTLY -> View.MeasureSpec.getSize(measureSpec)
-                View.MeasureSpec.AT_MOST -> Math.min(defaultSize, View.MeasureSpec.getSize(measureSpec))
-                View.MeasureSpec.UNSPECIFIED -> defaultSize
+            when (MeasureSpec.getMode(measureSpec)) {
+                MeasureSpec.EXACTLY -> MeasureSpec.getSize(measureSpec)
+                MeasureSpec.AT_MOST -> min(defaultSize, MeasureSpec.getSize(measureSpec))
+                MeasureSpec.UNSPECIFIED -> defaultSize
                 else -> defaultSize
             }
 
@@ -486,10 +495,10 @@ class LoadingButton @JvmOverloads constructor(
     }
 
     private fun playStartAnimation(isReverse: Boolean) {
-
+        val viewHeight = max(height, mMinHeight.toInt())
         val animator = ValueAnimator.ofInt(
-                if (isReverse) width / 2 - height / 2 else 0,
-                if (isReverse) 0 else width / 2 - height / 2)
+                if (isReverse) width / 2 - viewHeight / 2 else 0,
+                if (isReverse) 0 else width / 2 - viewHeight / 2)
                 .apply {
                     duration = 400
                     interpolator = AccelerateDecelerateInterpolator()
@@ -647,13 +656,14 @@ class LoadingButton @JvmOverloads constructor(
 
     private fun scaleSuccessPath() {
         val scaleMatrix = Matrix()
+        val viewHeight = max(height, mMinHeight.toInt())
         ValueAnimator.ofFloat(1.0f, 0.0f)
                 .apply {
                     duration = 300
                     interpolator = AccelerateDecelerateInterpolator()
                     addUpdateListener { valueAnimator ->
                         val value = valueAnimator.animatedValue as Float
-                        scaleMatrix.setScale(value, value, (width / 2).toFloat(), (height / 2).toFloat())
+                        scaleMatrix.setScale(value, value, (width / 2).toFloat(), (viewHeight / 2).toFloat())
                         mSuccessPath!!.transform(scaleMatrix)
                         invalidate()
                     }
@@ -666,13 +676,14 @@ class LoadingButton @JvmOverloads constructor(
 
     private fun scaleFailedPath() {
         val scaleMatrix = Matrix()
+        val viewHeight = max(height, mMinHeight.toInt())
         ValueAnimator.ofFloat(1.0f, 0.0f)
                 .apply {
                     duration = 300
                     interpolator = AccelerateDecelerateInterpolator()
                     addUpdateListener { valueAnimator ->
                         val value = valueAnimator.animatedValue as Float
-                        scaleMatrix.setScale(value, value, (width / 2).toFloat(), (height / 2).toFloat())
+                        scaleMatrix.setScale(value, value, (width / 2).toFloat(), (viewHeight / 2).toFloat())
                         mFailedPath!!.transform(scaleMatrix)
                         mFailedPath2!!.transform(scaleMatrix)
                         invalidate()
