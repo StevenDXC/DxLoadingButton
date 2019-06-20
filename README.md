@@ -32,7 +32,8 @@ layout:
      app:lb_btnDisabledColor="#cccccc"
      app:lb_disabledTextColor="#999999"
      app:lb_cornerRadius="32"
-     app:lb_btnText="@string/button_text" 					    
+     app:lb_rippleEnable="true"					  
+     app:lb_btnText="@string/button_text"
 />
 ```
 code:
@@ -106,6 +107,6 @@ add dependency：
 
 ```java
 dependencies {
-    compile 'com.github.StevenDXC:DxLoadingButton:2.1'
+    compile 'com.github.StevenDXC:DxLoadingButton:2.2'
 }
 ```
