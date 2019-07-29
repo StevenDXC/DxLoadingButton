@@ -56,7 +56,7 @@ class LoadingButton @JvmOverloads constructor(
 
     var rippleColor = Color.BLACK
         set(value){
-            ripplePaint.color = value
+            mRipplePaint.color = value
             field = value
         }
 
@@ -128,12 +128,12 @@ class LoadingButton @JvmOverloads constructor(
     private var mDisabledBgColor = Color.LTGRAY
     private var mTextColor = Color.WHITE
     private var mDisabledTextColor = Color.DKGRAY
-    private var mRippleAlpha = 0.3f
+    private var mRippleAlpha = 0.2f
 
     private var mPadding = 6 * mDensity
 
     private val mPaint = Paint()
-    private val ripplePaint = Paint()
+    private val mRipplePaint = Paint()
     private val mStrokePaint = Paint()
     private val mTextPaint = Paint()
     private val mPathEffectPaint = Paint()
@@ -195,10 +195,10 @@ class LoadingButton @JvmOverloads constructor(
             isAntiAlias = true
             color = mColorPrimary
             style = Paint.Style.FILL
-            setShadowDepth(context, 1)
+            setShadowDepth(2 * mDensity)
         }
 
-        ripplePaint.apply {
+        mRipplePaint.apply {
             isAntiAlias = true
             color = rippleColor
             alpha = (mRippleAlpha * 255).toInt()
@@ -235,6 +235,8 @@ class LoadingButton @JvmOverloads constructor(
             style = Paint.Style.STROKE
             strokeWidth = 2 * mDensity
         }
+
+        setLayerType(LAYER_TYPE_SOFTWARE, mPaint)
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
@@ -272,16 +274,18 @@ class LoadingButton @JvmOverloads constructor(
             MotionEvent.ACTION_DOWN -> {
                 mTouchX = event.x
                 mTouchY = event.y
-                playRippleAnimation(true)
+                playTouchDownAnimation()
             }
             MotionEvent.ACTION_UP -> if (event.x > mButtonRectF.left && event.x < mButtonRectF.right && event.y > mButtonRectF.top && event.y < mButtonRectF.bottom) {
                 // only register as click if finger is up inside view
-                playRippleAnimation(false)
+                playRippleAnimation()
             } else {
                 // if finger is moved outside view and lifted up, reset view
                 mTouchX = 0f
                 mTouchY = 0f
                 mRippleRadius = 0f
+                mRipplePaint.alpha = (mRippleAlpha * 255).toInt()
+                mPaint.setShadowDepth(2 * mDensity)
                 invalidate()
             }
         }
@@ -301,7 +305,7 @@ class LoadingButton @JvmOverloads constructor(
                     canvas.drawText(mText, (width - mTextWidth) / 2, (viewHeight - mTextHeight) / 2 + mPadding * 2, mTextPaint)
                     if ((mTouchX > 0 || mTouchY > 0) && rippleEnable) {
                         canvas.clipRect(0f, mPadding, width.toFloat(), viewHeight - mPadding)
-                        canvas.drawCircle(mTouchX, mTouchY, mRippleRadius, ripplePaint)
+                        canvas.drawCircle(mTouchX, mTouchY, mRippleRadius, mRipplePaint)
                     }
                 }
             }
@@ -471,27 +475,49 @@ class LoadingButton @JvmOverloads constructor(
         invalidate()
     }
 
-
-    private fun playRippleAnimation(isTouchDown: Boolean) {
-        mPaint.setShadowDepth(context, 2)
-        ValueAnimator.ofFloat(
-                if (isTouchDown) 0f else (width / 2).toFloat(),
-                if (isTouchDown) (width / 2).toFloat() else width.toFloat())
+    private fun playTouchDownAnimation(){
+        ValueAnimator.ofFloat(0f, 1f)
                 .apply {
                     duration = 240
                     interpolator = AccelerateDecelerateInterpolator()
                     addUpdateListener { valueAnimator ->
-                        mRippleRadius = valueAnimator.animatedValue as Float
+                        val progress = valueAnimator.animatedValue as Float
+                        mPaint.setShadowDepth((2 + 4 * progress) * mDensity)
+                        mRippleRadius = width *  progress
+                        //mRipplePaint.alpha = (255 * mRippleAlpha * (1 - progress)).toInt()
                         invalidate()
                     }
-                    if(!isTouchDown) doOnEnd {
-                        performClick()
-                        mTouchX = 0f
-                        mTouchY = 0f
-                        mRippleRadius = 0f
+                }
+                .start()
+    }
+
+
+    private fun playRippleAnimation() {
+        ValueAnimator.ofFloat(
+                1f,
+                0f)
+                .apply {
+                    duration = 240
+                    interpolator = DecelerateInterpolator()
+                    addUpdateListener { valueAnimator ->
+                        val progress = valueAnimator.animatedValue as Float
+                        mRipplePaint.alpha = (255 * mRippleAlpha * progress).toInt()
+                        mPaint.setShadowDepth((2 + 4 * progress) * mDensity)
                         invalidate()
+                    }
+                    doOnEnd {
+                        doClick()
                     }
                 }.start()
+    }
+
+    private fun doClick(){
+        mTouchX = 0f
+        mTouchY = 0f
+        mRipplePaint.alpha = (mRippleAlpha * 255).toInt()
+        mRippleRadius = 0f
+        invalidate()
+        performClick()
     }
 
     private fun playStartAnimation(isReverse: Boolean) {
@@ -510,7 +536,7 @@ class LoadingButton @JvmOverloads constructor(
                     doOnEnd {
                         mCurrentState = if (isReverse) STATE_BUTTON else STATE_ANIMATION_STEP2
                         if (mCurrentState == STATE_BUTTON) {
-                            mPaint.setShadowDepth(context,1)
+                            mPaint.setShadowDepth(2 * mDensity)
                             invalidate()
                         }
                     }
@@ -708,7 +734,6 @@ private fun Animator.doOnEnd(action: (animator: Animator?) -> Unit) {
     })
 }
 
-private fun Paint.setShadowDepth(context: Context,depth: Int){
-    val density = context.resources.displayMetrics.density
-    this.setShadowLayer(depth * density, 0f, 2 * density, 0x1F000000)
+private fun Paint.setShadowDepth(depth: Float){
+    this.setShadowLayer(depth, 0f, 2f, 0x6F000000.toInt())
 }
