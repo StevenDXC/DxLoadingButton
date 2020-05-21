@@ -1,6 +1,6 @@
 # DxLoadingButton
 
-android button view with loading animation,and load successful/failed animation
+android button to loading view with animation,and load successful/failed animation
 
 
 [![](https://jitpack.io/v/StevenDXC/DxLoadingButton.svg)](https://jitpack.io/#StevenDXC/DxLoadingButton)

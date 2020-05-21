@@ -12,7 +12,7 @@
     android:layout_height="match_parent">
 
 
-    <android.support.v7.widget.AppCompatEditText
+    <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/edit_user_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -20,7 +20,7 @@
         android:layout_marginRight="@dimen/activity_horizontal_margin"
         android:hint="@string/user_name"/>
 
-    <android.support.v7.widget.AppCompatEditText
+    <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/edit_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -39,7 +39,17 @@
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_marginRight="@dimen/activity_horizontal_margin"
         app:lb_btnText ="@string/button_text"
-        app:lb_min_height="48dp"/>
+        app:lb_min_height="48dp"
+        app:lb_btnColor="@color/colorAccent"
+        app:lb_btnDisabledColor="@color/colorPrimaryDark"
+        app:lb_btnRippleAlpha="0.6"
+        app:lb_btnRippleColor="#000000"
+        app:lb_cornerRadius="20dp"
+        app:lb_disabledTextColor="#cccccc"
+        app:lb_resetAfterFailed="true"
+        app:lb_rippleEnable="true"
+        app:lb_textColor="#cccccc"
+        />
 
 </LinearLayout>
 

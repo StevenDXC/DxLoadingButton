@@ -20,8 +20,7 @@
         android:layout_weight="1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:textSize="10sp"
-        android:text="successful"/>
+        android:text="success"/>
 
     <Button
         style="?android:buttonBarButtonStyle"
@@ -59,7 +58,7 @@
         android:layout_marginRight="32dp"
         app:lb_resetAfterFailed="true"
         app:lb_btnRippleColor="#000000"
-        app:lb_btnText="@string/button_text"
+        app:lb_btnText="#FF95B7E4"
         />
 
 
